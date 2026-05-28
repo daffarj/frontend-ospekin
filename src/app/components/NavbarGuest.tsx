@@ -1,103 +1,177 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
 
 const tabs = [
   { label: "Beranda", href: "/" },
   { label: "Katalog", href: "/katalog" },
-  { label: "Cara Pesan", href: "/about#cara-pesan" },
   { label: "About", href: "/about" },
 ];
 
 export function NavbarGuest() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const navRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Hitung posisi sliding indicator
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
+    const activeIndex = tabs.findIndex(
+      (t) =>
+        t.href === location.pathname ||
+        location.pathname.startsWith(t.href + "/"),
+    );
+    const target = tabRefs.current[activeIndex === -1 ? 0 : activeIndex];
+    const container = navRef.current;
+    if (!target || !container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    setIndicatorStyle({
+      left: targetRect.left - containerRect.left,
+      width: targetRect.width,
+    });
+  }, [location.pathname]);
+
+  const activeIndex = tabs.findIndex(
+    (t) =>
+      t.href === location.pathname ||
+      location.pathname.startsWith(t.href + "/"),
+  );
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "backdrop-blur-xl bg-black/60 border-b border-white/10" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <button onClick={() => navigate("/")} className="flex items-center gap-1">
-            <span className="text-white font-bold text-lg tracking-tight">OSPEKIN</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-0.5" />
-            <span className="text-white/40 font-bold text-lg">.UB</span>
-          </button>
-
-          {/* Center nav - desktop */}
-          <div className="hidden md:flex items-center gap-1 bg-white/8 rounded-full px-2 py-1.5 border border-white/10">
-            {tabs.map((tab) => (
-              <button
-                key={tab.label}
-                onClick={() => navigate(tab.href)}
-                className={`px-4 py-1.5 rounded-full text-sm transition-all ${
-                  location.pathname === tab.href
-                    ? "bg-white/15 text-white"
-                    : "text-white/60 hover:text-white hover:bg-white/8"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+    <header className="fixed top-0 w-full z-50 bg-transparent">
+      <nav className="flex justify-between items-center w-full max-w-7xl mx-auto px-4 md:px-8 h-20 relative">
+        {/* ── Logo pill ── */}
+        <div className="flex items-center gap-2">
+          <div
+            onClick={() => navigate("/")}
+            className="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full
+                       flex items-center justify-center gap-1.5 shadow-inner cursor-pointer select-none
+                       hover:bg-white/10 transition-colors duration-200"
+          >
+            <span className="font-bold text-white text-base tracking-tight">
+              OSPEKIN.UB
+            </span>
           </div>
+        </div>
 
-          {/* Right buttons */}
-          <div className="hidden md:flex items-center gap-3">
+        {/* ── Center nav pill dengan sliding indicator (desktop only) ── */}
+        <div
+          ref={navRef}
+          className="hidden md:flex items-center gap-0 relative px-2 py-1
+                     bg-white/8 border border-white/10 backdrop-blur-md rounded-full"
+          id="nav-container"
+        >
+          {/* Sliding active indicator */}
+          <div
+            className="absolute top-1 bottom-1 rounded-full bg-white/15 transition-all duration-300 ease-out pointer-events-none"
+            style={{
+              left: indicatorStyle.left,
+              width: indicatorStyle.width,
+            }}
+          />
+
+          {tabs.map((tab, i) => (
+            <a
+              key={tab.label}
+              ref={(el) => {
+                tabRefs.current[i] = el;
+              }}
+              href={tab.href}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(tab.href);
+              }}
+              className={`relative z-10 px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                i === (activeIndex === -1 ? 0 : activeIndex)
+                  ? "text-white"
+                  : "text-white/55 hover:text-white hover:scale-105"
+              }`}
+            >
+              {tab.label}
+            </a>
+          ))}
+        </div>
+
+        {/* ── Right buttons (desktop only) ── */}
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => navigate("/auth/login")}
+            className="px-6 py-2 rounded-full text-sm font-medium text-white/70
+                       hover:text-white hover:bg-white/8 border border-transparent
+                       hover:border-white/20 transition-all duration-200"
+          >
+            Masuk
+          </button>
+          <button
+            onClick={() => navigate("/auth/register")}
+            className="px-6 py-2 rounded-full text-sm font-medium text-white
+                       hover:scale-105 active:scale-95 transition-all duration-200
+                       shadow-lg shadow-indigo-500/25"
+            style={{ background: "linear-gradient(135deg, #6366f1, #f43f5e)" }}
+          >
+            Daftar
+          </button>
+        </div>
+
+        {/* ── Hamburger (mobile only) ── */}
+        <button
+          className="md:hidden text-white p-1"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </button>
+      </nav>
+
+      {/* ── Mobile dropdown (hamburger) ── */}
+      {mobileOpen && (
+        <div className="md:hidden bg-black/90 backdrop-blur-xl border-t border-white/10 px-4 py-4 space-y-2">
+          {tabs.map((tab) => (
+            <a
+              key={tab.label}
+              href={tab.href}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(tab.href);
+                setMobileOpen(false);
+              }}
+              className="block w-full text-left px-4 py-2.5 rounded-xl text-white/80 hover:bg-white/8 text-sm"
+            >
+              {tab.label}
+            </a>
+          ))}
+          <div className="flex gap-2 pt-2">
             <button
-              onClick={() => navigate("/auth/login")}
-              className="px-5 py-2 rounded-full text-sm text-white border border-white/30 hover:bg-white/8 transition-all"
+              onClick={() => {
+                navigate("/auth/login");
+                setMobileOpen(false);
+              }}
+              className="flex-1 py-2 rounded-full text-sm text-white border border-white/30"
             >
               Masuk
             </button>
             <button
-              onClick={() => navigate("/auth/register")}
-              className="px-5 py-2 rounded-full text-sm text-white transition-all hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #6366f1, #f43f5e)" }}
+              onClick={() => {
+                navigate("/auth/register");
+                setMobileOpen(false);
+              }}
+              className="flex-1 py-2 rounded-full text-sm text-white"
+              style={{
+                background: "linear-gradient(135deg, #6366f1, #f43f5e)",
+              }}
             >
               Daftar
             </button>
           </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-black/90 backdrop-blur-xl border-t border-white/10 px-4 py-4 space-y-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.label}
-              onClick={() => { navigate(tab.href); setMobileOpen(false); }}
-              className="block w-full text-left px-4 py-2.5 rounded-xl text-white/80 hover:bg-white/8 text-sm"
-            >
-              {tab.label}
-            </button>
-          ))}
-          <div className="flex gap-2 pt-2">
-            <button onClick={() => navigate("/auth/login")} className="flex-1 py-2 rounded-full text-sm text-white border border-white/30">Masuk</button>
-            <button onClick={() => navigate("/auth/register")} className="flex-1 py-2 rounded-full text-sm text-white" style={{ background: "linear-gradient(135deg, #6366f1, #f43f5e)" }}>Daftar</button>
-          </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
