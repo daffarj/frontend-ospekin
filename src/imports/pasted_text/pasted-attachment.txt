@@ -1,0 +1,1145 @@
+# OSPEKIN.UB — Stitch Prompts (All Pages)
+
+## GLOBAL DESIGN SYSTEM
+> Paste ini di awal setiap sesi Stitch sebagai konteks global
+
+```
+Project: OSPEKIN.UB — ospek attribute package ordering platform for new 
+students at Universitas Brawijaya, Indonesia.
+
+GLOBAL DESIGN RULES (apply to all pages):
+- Framework: React + TypeScript + Tailwind CSS + shadcn/ui
+- Install: framer-motion, lucide-react
+
+COLOR SYSTEM:
+- Background dark (public pages): #030303
+- Background light (dashboard pages): #f8f9fa / white
+- Primary accent: indigo (#6366f1) to rose (#f43f5e) gradient
+- Text primary dark: white / white-80
+- Text primary light: #111827
+- Muted text: #6b7280
+- Border: rgba(255,255,255,0.08) on dark / #e5e7eb on light
+- Success: #10b981, Warning: #f59e0b, Error: #ef4444, Info: #3b82f6
+
+TYPOGRAPHY:
+- Font: Inter or Geist Sans
+- Headline: font-bold, tracking-tight
+- Body: font-light, tracking-wide
+- Code/path: font-mono
+
+COMPONENT STYLE RULES:
+- Buttons: rounded-full, generous padding
+- Cards: rounded-2xl, subtle border, no heavy shadow
+- Inputs: rounded-xl, border focus ring in indigo
+- Badges: rounded-full, small padding
+- Everything feels breathable — generous whitespace
+- No heavy drop shadows, no gradients on backgrounds except hero
+- Hover states: subtle scale or glow only
+
+SHARED COMPONENTS:
+1. Navbar Guest — transparent, logo left, slide-tab nav center, 
+   Masuk+Daftar buttons right
+2. Navbar User — white bg, logo left, page title center, 
+   notif bell + avatar dropdown right
+3. Sidebar Admin — dark sidebar (#111827), logo top, 
+   vertical nav menu, user info bottom
+4. Navbar Kurir — white bg, logo left, "Tugas Pengantaran" title, logout right
+```
+
+---
+
+## ═══════════════════════════
+## PUBLIC PAGES
+## ═══════════════════════════
+
+---
+
+### P-01 — LANDING PAGE `/`
+
+```
+Build a full landing page for OSPEKIN.UB. Dark theme (#030303 background).
+All sections on one scrollable page.
+
+── NAVBAR ──
+Sticky top navbar, transparent over hero then blur-glass on scroll.
+- Left: Logo text "OSPEKIN" bold white + small rose dot badge + ".UB" 
+  in white/40
+- Center: Slide-tab navigation with animated pill cursor on hover/click. 
+  Tabs: Beranda, Katalog, Cara Pesan, About
+- Right: "Masuk" button (outlined white, rounded-full) + "Daftar" button 
+  (indigo-to-rose gradient fill, rounded-full, white text)
+- Mobile: hamburger icon right, slide-down mobile menu
+
+── HERO SECTION ── (full viewport height)
+Background:
+- Base: #030303
+- Subtle gradient overlay: indigo/5% top-left, rose/5% bottom-right
+- 5 floating geometric pill shapes scattered behind content, each with 
+  slow float animation (y: 0→15→0, 12s loop):
+  Shape 1: large pill, indigo/15% gradient, top-left area, rotate 12deg
+  Shape 2: medium pill, rose/15%, bottom-right, rotate -15deg
+  Shape 3: small pill, violet/15%, bottom-left, rotate -8deg
+  Shape 4: tiny pill, amber/15%, top-right, rotate 20deg
+  Shape 5: smallest pill, cyan/15%, top-center-left, rotate -25deg
+  All shapes: semi-transparent border white/15, backdrop-blur, 
+  fade-in animation on page load
+
+Center content (above shapes):
+- Badge pill: rose filled dot + "Atribut Resmi Ospek UB 2026" text white/60, 
+  dark pill bg, white/8 border
+- H1 large (text-8xl on desktop, text-4xl mobile):
+  Line 1: "Lengkap Satu Paket," — white gradient bottom
+  Line 2: "Siap Hari Pertama" — indigo-to-rose gradient text
+- Subtitle: "Pesan atribut ospek Universitas Brawijaya tanpa antri. 
+  DP dulu, lunasi setelah harga resmi keluar." — white/40, font-light, 
+  centered, max-w-xl
+- 2 CTA buttons side by side:
+  "Pesan Sekarang" — gradient fill indigo→rose, white text, rounded-full, 
+  px-8 py-3, hover scale slightly
+  "Lihat Katalog" — white outline border, white text, rounded-full, 
+  same size, hover bg-white/5
+- Bottom: gradient fade to black
+
+── SECTION: CARA KERJA ── ("Bagaimana Cara Pesan?")
+Dark card bg (#0a0a0a), centered content
+- Section label pill: "Proses Pemesanan" badge
+- H2: "4 Langkah, Paket Sampai di Tanganmu"
+- 4 horizontal steps with connecting line/arrow between them:
+  Step 1: icon (user-plus) — "Daftar & Isi Profil"
+  Step 2: icon (shopping-cart) — "Pilih Paket & Bayar DP"
+  Step 3: icon (clock) — "Tunggu Harga Final"
+  Step 4: icon (package) — "Lunasi & Terima Paket"
+  Each step: numbered circle (indigo), icon, title, 1-line desc
+- Mobile: vertical steps with left border line
+
+── SECTION: PREVIEW PAKET ── ("Paket Tersedia")
+- Section label + H2: "Semua yang Kamu Butuhkan, Satu Paket"
+- Subtitle: "Harga yang ditampilkan adalah estimasi. Harga resmi 
+  akan diperbarui panitia."
+- Info banner: amber/warning pill — "Harga estimasi, belum final"
+- Grid 2-3 cols: package cards
+  Each card (dark card bg, white/5 border, rounded-2xl, hover border 
+  glow indigo):
+    - Package name (bold, white)
+    - Price badge: "Est. Rp XXX.XXX" with warning label
+    - List of 6-8 bundle items with checkmark icons (from the 16 items: 
+      Name Tag, Pin Cluster, Sandal Jepit, Tumbler, Tote Bag, dll)
+    - "DP Rp XX.XXX" in small text below
+    - CTA button: "Pesan Sekarang" → redirect to login
+- Use 2 sample package cards as placeholder
+
+── SECTION: KENAPA OSPEKIN ── ("Mengapa Pesan di Sini?")
+- H2: "Kenapa Harus OSPEKIN?"
+- 3-column benefit cards (icon + title + desc):
+  1. shield-check icon — "Pembayaran Aman" — via Dokupay, QRIS & e-wallet
+  2. map-pin icon — "Antar ke Kos" — kurir internal panitia, 
+     pantau status real-time
+  3. clock icon — "Bayar DP Dulu" — kunci kuota sekarang, 
+     lunasi setelah harga fix
+- Cards: semi-dark bg, subtle left-border accent indigo
+
+── SECTION: FAQ ──
+- H2: "Pertanyaan Umum"
+- Accordion style (shadcn Accordion component), 5 items:
+  Q: "Kapan saya harus melunasi sisa pembayaran?"
+  A: "Setelah panitia merilis harga resmi. Kamu akan dapat notifikasi email."
+  Q: "Bagaimana jika saya belum tahu alamat kos?"
+  A: "Bisa isi alamat menyusul, maksimal H-1 sebelum pengantaran."
+  Q: "Apakah bisa ambil sendiri?"
+  A: "Bisa, pilih opsi Ambil di Tempat saat pemesanan."
+  Q: "Metode pembayaran apa yang tersedia?"
+  A: "QRIS, e-wallet (GoPay, OVO, Dana), dan Virtual Account."
+  Q: "Bagaimana cara lacak pesanan saya?"
+  A: "Login ke akun, buka Status Pesanan untuk melihat posisi pengantaran."
+
+── FOOTER ──
+Dark bg #0a0a0a, border-top white/5
+- Left: Logo OSPEKIN.UB + tagline 1 line
+- Center: Quick links (Katalog, Cara Pesan, About, Login)
+- Right: "Hubungi Kami" — WhatsApp button (green, wa.me link placeholder)
+- Bottom bar: copyright + "Platform pemesanan atribut ospek UB"
+```
+
+---
+
+### P-02 — KATALOG PAKET `/katalog`
+
+```
+Build the package catalog page for OSPEKIN.UB. Dark theme.
+
+── NAVBAR (shared, same as landing) ──
+
+── PAGE HEADER ──
+- Centered, top padding large
+- Small badge: "16 Item per Paket"
+- H1: "Katalog Paket Atribut Ospek"
+- Subtitle: "Satu paket sudah mencakup semua kebutuhan ospek kamu. 
+  Harga yang ditampilkan adalah estimasi."
+- Warning banner pill: amber bg — "⚠ Harga estimasi — belum final. 
+  Harga resmi akan diumumkan panitia."
+
+── PACKAGE GRID ──
+- 2-3 columns grid (responsive)
+- Each package card (dark card, white/5 border, rounded-2xl, 
+  hover: border indigo glow, scale 1.01):
+  TOP: Package name (bold, large, white)
+  PRICE ROW: "Est. Rp XXX.XXX" (white) + badge "Belum Final" (amber pill)
+  DP ROW: "DP Rp XX.XXX" (indigo color, smaller)
+  DIVIDER
+  ITEM LIST: 2-column grid of all 16 bundle items with check icons:
+    Name Tag, Pin Cluster, Bag Tag, Sandal Jepit, Botol 1.5ml, 
+    Buku Catatan, Pita Merah Putih, Pita Sakit, Pita Gerbang, 
+    TrashBag, Jas Hujan, Koran, Roti, Tumbler 600ml, 
+    Tote Bag, Hand Sanitizer
+    Style: small text, white/60, checkmark in indigo/green
+  BOTTOM: CTA "Pesan Sekarang" full-width gradient button
+
+- Use 2 sample cards as placeholder data
+
+── FOOTER (shared) ──
+```
+
+---
+
+### P-03 — ABOUT `/about`
+
+```
+Build the About/Info page for OSPEKIN.UB. Dark theme.
+
+── NAVBAR (shared) ──
+
+── PAGE HEADER ──
+- Badge: "Tentang Kami"
+- H1: "OSPEKIN.UB"
+- Subtitle: "Toko penyedia atribut ospek resmi untuk Mahasiswa 
+  Baru Universitas Brawijaya."
+
+── SECTION: TENTANG ──
+- 2-column layout: left text, right decorative (abstract shape/icon grid)
+- Paragraph text explaining: toko atribut ospek, bukan panitia resmi UB, 
+  menyediakan paket bundle lengkap, sistem pemesanan online dengan 
+  pembayaran bertahap
+
+── SECTION: ALUR PEMESANAN ──
+- H2: "Cara Pesan"
+- Vertical stepper with 6 steps, left timeline line, 
+  alternating content left-right on desktop:
+  1. Daftar akun dengan email personal
+  2. Lengkapi profil & alamat
+  3. Pilih paket, isi data, bayar DP
+  4. Tunggu panitia rilis harga resmi
+  5. Bayar pelunasan sisa
+  6. Terima paket di kos / ambil sendiri
+  Each step: number circle (indigo), title bold, desc muted
+
+── SECTION: KONTAK ──
+- H2: "Hubungi Kami"
+- 2-column card grid:
+  Card 1: WhatsApp icon — nomor WA placeholder — button "Chat Sekarang"
+  Card 2: Instagram icon — @ospekin.ub placeholder — button "Follow"
+- Operating hours: "Senin–Sabtu, 08.00–17.00 WIB"
+
+── FOOTER (shared) ──
+```
+
+---
+
+## ═══════════════════════════
+## AUTH PAGES
+## ═══════════════════════════
+
+---
+
+### A-01 — REGISTER `/auth/register`
+
+```
+Build the registration page for OSPEKIN.UB.
+Theme: dark background, centered card layout.
+
+── LAYOUT ──
+- Full screen height, dark bg #030303
+- Subtle floating shapes in background (same as hero, smaller, 
+  lower opacity)
+- Centered auth card: dark surface bg (#111), rounded-2xl, 
+  white/5 border, max-w-md, padding generous
+
+── CARD CONTENT ──
+TOP:
+- Logo "OSPEKIN.UB" centered, bold white
+- H2: "Buat Akun Baru"
+- Subtitle: "Gunakan email personal (Gmail, Yahoo, dll)"
+
+FORM (top to bottom):
+- Input: Email address
+  Placeholder: "emailkamu@gmail.com"
+  Real-time format validation, error state: red border + error msg below
+  
+- Input: Password
+  Placeholder: "Buat password"
+  Right icon: eye toggle show/hide
+  Password strength bar below (4 segments: weak/fair/strong/very strong, 
+  colors red→orange→yellow→green)
+  
+- Input: Konfirmasi Password
+  Placeholder: "Ulangi password"
+  Right icon: eye toggle
+  Error msg if not matching: "Password tidak cocok"
+
+- Button: "Daftar" — full width, gradient indigo→rose, rounded-full, 
+  white text, disabled + opacity 50% until all fields valid
+
+POST-SUBMIT STATE (replace form):
+- Centered success illustration (email icon or envelope)
+- Text: "Cek email kamu!"
+- Sub: "Kami sudah kirim link verifikasi ke [email]. Klik link 
+  tersebut untuk mengaktifkan akunmu."
+- Small link: "Kirim ulang email" + "Ganti email" → back to form
+
+BOTTOM:
+- "Sudah punya akun?" + link "Masuk" → /auth/login
+
+RIGHT SIDE (desktop 2-col layout):
+- Decorative panel, dark gradient bg
+- Show the 16 item list in a stylized floating card, "Yang Kamu Dapat:" header
+- Preview of package items with icons
+```
+
+---
+
+### A-02 — VERIFIKASI EMAIL `/auth/verify-email`
+
+```
+Build the email verification page for OSPEKIN.UB.
+Theme: dark bg, centered card.
+
+── LAYOUT ──
+Same dark centered card layout as register page.
+
+── STATE: LOADING ──
+- Spinner (indigo color, animated)
+- Text: "Memverifikasi email kamu..."
+- Sub: "Mohon tunggu sebentar"
+
+── STATE: SUKSES ──
+- Large checkmark icon, animated (scale in, indigo/green color)
+- H2: "Email Berhasil Diverifikasi!"
+- Sub: "Akunmu sudah aktif. Kamu bisa mulai memesan atribut ospek."
+- Button: "Mulai Pesan Sekarang" — gradient, full width → /auth/login
+
+── STATE: GAGAL / KADALUARSA ──
+- Large X icon (red/rose)
+- H2: "Link Tidak Valid"
+- Sub: "Link verifikasi sudah kadaluarsa atau pernah digunakan."
+- Button: "Kirim Ulang Email Verifikasi" — outlined, full width
+- Small link: "Kembali ke Login"
+```
+
+---
+
+### A-03 — LOGIN `/auth/login`
+
+```
+Build the login page for OSPEKIN.UB.
+Theme: dark bg, same centered card layout as register.
+
+── CARD CONTENT ──
+TOP:
+- Logo "OSPEKIN.UB" centered
+- H2: "Selamat Datang"
+- Subtitle: "Masuk ke akunmu"
+
+FORM:
+- Input: Email
+  Placeholder: "emailkamu@gmail.com"
+
+- Input: Password
+  Placeholder: "Password kamu"
+  Right icon: eye toggle
+
+- Alert banner (conditional, hidden by default):
+  Orange/amber bg — "Email ini belum diverifikasi. 
+  Cek inbox atau" + link "kirim ulang email verifikasi"
+
+- Button: "Masuk" — full width, gradient, rounded-full
+
+- Error state: below button, red text — "Email atau password salah"
+
+BOTTOM:
+- "Belum punya akun?" + link "Daftar Sekarang" → /auth/register
+```
+
+---
+
+## ═══════════════════════════
+## USER PAGES
+## ═══════════════════════════
+
+---
+
+### U-01 — DASHBOARD USER `/user/dashboard`
+
+```
+Build the user dashboard for OSPEKIN.UB.
+Theme: light/white, clean dashboard layout.
+
+── NAVBAR USER (shared) ──
+White bg, subtle bottom border.
+- Left: Logo "OSPEKIN.UB" (dark text version)
+- Right: Bell icon (notif) + Avatar circle (initials) + dropdown 
+  (Profil Saya, Keluar)
+
+── PAGE CONTENT ──
+Max-width container, top padding.
+
+STATE A — PROFIL BELUM LENGKAP (show as top alert):
+- Full-width banner: amber/warning bg, icon alert-triangle
+- Text: "Lengkapi profil dulu sebelum bisa memesan"
+- Button: "Lengkapi Profil Sekarang" → /user/profil
+
+STATE B — ADA TAGIHAN PELUNASAN (show as second alert):
+- Full-width banner: blue/info bg, icon credit-card
+- Text: "Tagihan pelunasan paketmu sudah terbit!"
+- Amount: "Sisa Rp XX.XXX"
+- Button: "Bayar Sekarang" → payment flow
+
+STATE C — MAIN CONTENT (show when sudah ada pesanan):
+- H2: "Pesananku"
+- Order summary card (white, rounded-2xl, border, shadow-sm):
+  Left: Package icon (box) in indigo bg circle
+  Center: Package name bold, "DP Rp XX.XXX" paid, order date
+  Right column:
+    Badge status bayar: "DP Lunas" (indigo) / "Lunas" (green) / 
+      "Belum Bayar" (gray)
+    Badge status logistik: "Pending" (gray) / "Ditugaskan" (blue) / 
+      "Sedang Di Jalan" (amber) / "Selesai" (green)
+  Bottom buttons row: "Lihat Status" / "Edit Pesanan" / "Bayar Pelunasan"
+
+STATE D — BELUM ADA PESANAN (empty state):
+- Centered illustration (package/box icon, large, muted color)
+- Text: "Belum ada pesanan"
+- Sub: "Yuk pesan paket atribut ospekmu sebelum kehabisan!"
+- Button: "Pesan Sekarang" → /user/pesan
+```
+
+---
+
+### U-02 — PROFIL & ALAMAT `/user/profil`
+
+```
+Build the user profile & address page for OSPEKIN.UB.
+Theme: light, clean form layout.
+
+── NAVBAR USER (shared) ──
+
+── PAGE LAYOUT ──
+2-column on desktop: left sidebar nav, right form content.
+
+LEFT SIDEBAR NAV:
+- Avatar circle large (initials), name, email
+- Menu list: "Data Diri" (active), "Alamat Pengiriman", "Keamanan"
+- Each menu item: icon + label, active state indigo
+
+RIGHT CONTENT — DATA DIRI:
+- H2: "Data Diri"
+- Form card (white, rounded-2xl, border, padding):
+  - Input: Nama Lengkap
+  - Input: Nomor WhatsApp (with +62 prefix select/flag)
+  - Input: Email — read-only, disabled state, lock icon right, 
+    helper text: "Email tidak bisa diubah"
+  - Save button: "Simpan Data Diri" (indigo, rounded-full)
+
+RIGHT CONTENT — ALAMAT PENGIRIMAN:
+- H2: "Alamat Pengiriman"
+- Info card (blue/info bg): 
+  "Alamat ini yang akan digunakan sebagai tujuan pengiriman paketmu."
+- Map placeholder (rounded-xl, border, aspect-video, gray bg with 
+  map-pin icon center): label "Google Maps Picker — klik untuk pin lokasi"
+- Input: Alamat Lengkap (textarea, autofill from map)
+- Checkbox: "Isi alamat menyusul (saya belum tahu alamat kos)" 
+  When checked: disable map & textarea, show amber warning:
+  "Kamu wajib mengisi alamat maksimal H-1 sebelum pengantaran"
+- Save button: "Simpan Alamat"
+
+RIGHT CONTENT — KEAMANAN:
+- H2: "Ganti Password"
+- Form card:
+  - Input: Password lama
+  - Input: Password baru  
+  - Input: Konfirmasi password baru
+  - Save button: "Ubah Password"
+```
+
+---
+
+### U-03 — FORM PEMESANAN `/user/pesan`
+
+```
+Build the order form page for OSPEKIN.UB.
+Theme: light, multi-section form with sticky progress indicator.
+
+── NAVBAR USER (shared) ──
+
+── GATE REDIRECT ──
+If profile incomplete: show full-page overlay card (not redirect):
+- Warning icon
+- "Lengkapi Profil Dulu"
+- Sub: "Kamu harus isi nama lengkap dan nomor WhatsApp sebelum bisa memesan"
+- Button: "Ke Halaman Profil"
+
+── PAGE LAYOUT ──
+Left main form (2/3 width) + Right order summary sticky card (1/3 width)
+
+── STEP PROGRESS BAR (top) ──
+4 steps with connected line:
+1. Pilih Paket — 2. Data Diri & Akademik — 3. Data Medis — 4. Pengiriman
+Active step: indigo filled circle, completed: green check
+
+── SECTION 1: PILIH PAKET ──
+- H3: "Pilih Paket"
+- Dropdown or radio card select: show package name + estimated price + 
+  item count. When selected, show collapsible item list below.
+
+── SECTION 2: IDENTITAS AKADEMIK ──
+- H3: "Data Akademik"
+- Select: Fakultas (dropdown, full list UB faculties)
+  Label: "Wajib diisi"
+- Input: NIM — optional badge "opsional — bisa diisi nanti"
+- Input: Cluster — optional badge, input number
+
+── SECTION 3: DATA MEDIS ──
+- H3: "Rekam Medis"
+- Info banner (blue): "Data ini digunakan panitia untuk keperluan 
+  medis saat ospek. Kerahasiaan terjaga."
+- Textarea: Riwayat Penyakit
+  Placeholder: "Contoh: Asma, Maag — atau ketik tanda (-) jika tidak ada"
+- Textarea: Alergi Obat
+  Placeholder: "Contoh: Penisilin — atau ketik tanda (-) jika tidak ada"
+
+── SECTION 4: PAS FOTO ──
+- H3: "Pas Foto"
+- Dropzone upload area (dashed border, rounded-xl):
+  Icon upload + "Klik atau drag foto ke sini"
+  Sub: ".jpg / .png, maksimal 3MB"
+  Optional badge: "bisa diisi nanti"
+- After upload: preview thumbnail + filename + remove button
+
+── SECTION 5: OPSI PENGIRIMAN ──
+- H3: "Opsi Pengiriman"
+- 2 radio cards (outlined, selected state: indigo border + bg-indigo/5):
+  Card 1: truck icon — "Kirim ke Alamat" — "Paket diantar kurir ke lokasi kamu"
+  Card 2: store icon — "Ambil di Tempat" — "Ambil sendiri di lokasi panitia"
+- If "Kirim" selected, show address preview:
+  Readonly card showing address from profile
+  Link: "Ganti alamat → /user/profil"
+  If address empty: amber banner + checkbox "Isi alamat menyusul"
+
+── RIGHT STICKY: ORDER SUMMARY ──
+- Card: white, rounded-2xl, border, sticky top-24
+- H3: "Ringkasan"
+- Package name + item count
+- Price: "Harga Estimasi: Rp XXX.XXX"
+- DP due: "DP sekarang: Rp XX.XXX" (bold, indigo)
+- Note: "Sisa dibayar setelah harga resmi keluar"
+- Button: "Lanjut ke Pembayaran DP" — full width gradient, rounded-full
+```
+
+---
+
+### U-04 — CHECKOUT & BAYAR DP `/user/checkout`
+
+```
+Build the checkout page for OSPEKIN.UB.
+Theme: light, clean checkout layout.
+
+── NAVBAR USER (shared) ──
+
+── PAGE LAYOUT ──
+Centered, max-w-2xl, single column.
+
+── BREADCRUMB ──
+"Form Pemesanan → Checkout → Selesai" with step indicator
+
+── CARD: RINGKASAN PESANAN ──
+White card, rounded-2xl, border:
+- Header: "Ringkasan Pesanan"
+- Package name bold + item count
+- Collapsible section: "Lihat isi paket (16 item)" with chevron
+- Row: Opsi pengiriman (Kirim ke Alamat / Ambil)
+- Row: Alamat (if kirim): address text, truncated
+
+── CARD: KODE REFERAL ──
+White card, rounded-2xl, border:
+- Label: "Punya Kode Referal?" (optional)
+- Input + "Terapkan" button (side by side)
+- Success state: green banner — "Kode berhasil! Diskon Rp XX.XXX"
+- Error state: red text — "Kode tidak valid atau sudah tidak aktif"
+
+── CARD: RINCIAN PEMBAYARAN ──
+White card, rounded-2xl, border:
+- Row: "DP Dasar" — Rp XX.XXX
+- Row (conditional): "Diskon Referal" — - Rp XX.XXX (green text)
+- Divider
+- Row: "Total DP yang Dibayar" — Rp XX.XXX (bold, large, indigo)
+- Info note (amber): "Harga estimasi. Sisa tagihan akan muncul setelah 
+  panitia rilis harga resmi."
+- Note: "Pembayaran diproses melalui Dokupay — QRIS, E-Wallet, VA tersedia"
+
+── CTA ──
+- Button: "Bayar DP Sekarang" — large, full width, gradient, rounded-full
+- Below: "Dengan menekan tombol ini, kamu menyetujui syarat & ketentuan"
+  small muted text
+- Loading state: spinner inside button, text "Mengarahkan ke pembayaran..."
+```
+
+---
+
+### U-05 — STATUS PESANAN `/user/pesanan/status`
+
+```
+Build the order tracking page for OSPEKIN.UB.
+Theme: light, tracking-focused layout.
+
+── NAVBAR USER (shared) ──
+
+── PAGE HEADER ──
+- H1: "Status Pesanan"
+- Package name subtitle
+
+── PROGRESS TRACKER ──
+Horizontal stepper (5 steps), with connecting line:
+1. DP Lunas (check icon when done, indigo)
+2. Lunas (check when done)
+3. Ditugaskan (box icon)
+4. Sedang Di Jalan (truck icon, animated pulse when active)
+5. Selesai (package-check icon, green when done)
+Active step: indigo pulsing ring
+Completed steps: green check
+
+── CARD: DETAIL PESANAN ──
+White card, rounded-2xl, border:
+- Package name + "16 item"
+- Order date
+- Delivery option badge
+- Address (if kirim)
+
+── CARD: TAGIHAN PELUNASAN (conditional — show when admin released) ──
+Blue/info gradient border card:
+- "Tagihan Pelunasanmu Sudah Terbit!" (header)
+- "Harga Resmi: Rp XXX.XXX"
+- "Sudah Dibayar: Rp XX.XXX (DP)"
+- "Sisa yang Harus Dibayar: Rp XX.XXX" (bold, large)
+- Button: "Bayar Pelunasan Sekarang" → Dokupay
+
+── CARD: INFO KURIR (conditional — show when Sedang Di Jalan) ──
+Amber/warm card:
+- Truck icon animated
+- "Paketmu sedang dalam perjalanan!"
+- "Diantar oleh: [Nama Kurir]"
+- Button: "Hubungi Kurir via WhatsApp" 
+  Green bg, WhatsApp icon + text, rounded-full
+  (Opens deep-link with prefilled template message)
+
+── CARD: BUKTI PENGIRIMAN (conditional — show when Selesai) ──
+Green success card:
+- "Paket Telah Diterima!" 
+- Delivery date + time
+- POD photo (rounded-xl, aspect-square, object-cover)
+- "Foto bukti penerimaan dari kurir" caption
+
+── BUTTON: EDIT PESANAN ──
+- Outlined button, bottom of page
+- Active: "Edit Data Pesanan" → /user/pesanan/edit
+- Locked state: button disabled + tooltip "Data pesanan sudah terkunci"
+  + small text: "Deadline edit: [tanggal deadline]"
+```
+
+---
+
+### U-06 — EDIT PESANAN `/user/pesanan/edit`
+
+```
+Build the edit order page for OSPEKIN.UB.
+Theme: light, same form layout as order form but pre-filled.
+
+── NAVBAR USER (shared) ──
+
+── LOCKED STATE BANNER (conditional — show when deadline passed) ──
+Full-width red/danger banner top of page:
+- Lock icon + "Data pesanan telah dikunci secara permanen"
+- Sub: "Deadline edit telah lewat. Data tidak dapat diubah."
+- All fields below become read-only/disabled
+
+── DEADLINE BANNER (conditional — show when not yet locked) ──
+Amber banner:
+- Clock icon + "Edit pesanan akan terkunci pada: [tanggal deadline]"
+- Countdown if close to deadline
+
+── FORM SECTIONS ──
+Same structure as order form (U-03) but pre-filled with existing data:
+
+SECTION: IDENTITAS AKADEMIK
+- Input NIM (pre-filled or empty)
+- Select Fakultas (pre-selected)
+- Input Cluster (pre-filled or empty)
+
+SECTION: DATA MEDIS
+- Textarea Riwayat Penyakit (pre-filled)
+- Textarea Alergi Obat (pre-filled)
+
+SECTION: PAS FOTO
+- If already uploaded: show current photo preview + "Ganti Foto" button
+- If not yet: show upload dropzone
+
+SECTION: ALAMAT PENGIRIMAN
+- If address pending: Google Maps Picker + address textarea (editable)
+- If already set: show current address + option to change
+- Maps placeholder (same as profile page)
+
+── BOTTOM ACTIONS ──
+- Button: "Simpan Perubahan" — gradient, rounded-full
+  (disabled + tooltip in locked state)
+- Link: "Kembali ke Status Pesanan"
+```
+
+---
+
+## ═══════════════════════════
+## ADMIN PAGES
+## ═══════════════════════════
+
+---
+
+### ADM-01 — DASHBOARD ADMIN `/admin/dashboard`
+
+```
+Build the admin dashboard for OSPEKIN.UB.
+Theme: light, data-heavy dashboard layout.
+
+── SIDEBAR (shared admin) ──
+Left sidebar, dark bg (#111827), fixed, 240px wide:
+- Top: Logo "OSPEKIN.UB" white
+- Navigation menu with icons (lucide-react):
+  grid-2x2: Dashboard (active)
+  package: Manajemen Paket
+  clipboard-list: Daftar Pesanan
+  users: Manajemen User
+  tag: Kode Referal
+  settings: Pengaturan
+- Bottom: Avatar + admin name + email + logout button
+
+── TOP BAR ──
+White top bar, border-bottom:
+- Left: "Dashboard" page title
+- Right: "Ekspor Data" button (outlined) + date badge "23 Mei 2026"
+
+── CONTENT ──
+
+ROW 1: METRIC CARDS (4 cards, equal width grid)
+Each card: white, rounded-2xl, border, padding, metric-card style:
+- Card 1: "Total Pesanan" — large number — icon clipboard
+- Card 2: "DP Sudah Masuk" — "Rp XX.XXX.XXX" — icon wallet, 
+  sub: "dari X pemesan"
+- Card 3: "Pesanan Lunas" — number — icon check-circle, green accent
+- Card 4: "Menunggu Ditugaskan" — number — icon clock, amber accent
+
+ROW 2: CHART + STOK OPNAME (2 columns)
+LEFT — Chart card:
+- H3: "Pemesan per Fakultas"
+- Horizontal bar chart (use recharts or simple CSS bars)
+- Top 8 faculties with bar + count label
+
+RIGHT — Stok Opname card:
+- H3: "Stok per Paket (Real-time)"
+- Table: Nama Paket | Total Dipesan | Lunas | Pending
+- Compact rows, alternating bg
+
+ROW 3: ALERT FLAGGING (2 columns)
+LEFT — red alert card:
+- Alert-triangle icon (red) + "Belum Isi Alamat"
+- Large number count
+- Sub: "Pemesan belum mengisi alamat pengiriman"
+- Button: "Lihat Daftar" → /admin/pesanan?filter=no-address
+
+RIGHT — orange alert card:
+- Camera-off icon (orange) + "Belum Upload Pas Foto"
+- Large number count
+- Button: "Lihat Daftar" → /admin/pesanan?filter=no-photo
+```
+
+---
+
+### ADM-02 — MANAJEMEN PAKET `/admin/paket`
+
+```
+Build the package management page for OSPEKIN.UB admin.
+Theme: light dashboard, same sidebar layout.
+
+── SIDEBAR + TOP BAR (shared) ──
+Active: "Manajemen Paket"
+Top bar: "Manajemen Paket" title + "Tambah Paket" button (indigo, right)
+
+── CONTENT ──
+
+PACKAGES TABLE (white card, rounded-2xl, border):
+- Table header: Nama Paket | Harga Estimasi | DP | Harga Final | 
+  Status | Aksi
+- Each row:
+  Name: bold
+  Harga Estimasi: Rp format
+  DP: Rp format, muted
+  Harga Final: Rp format OR badge "Belum Final" (amber pill)
+  Status: toggle badge "Aktif" (green) / "Nonaktif" (gray)
+  Aksi: 3 icon buttons: edit (pencil), toggle aktif (eye), 
+    rilis tagihan (send — only shown when harga final ada, indigo)
+
+── MODAL: TAMBAH / EDIT PAKET ──
+Slide-over panel from right or centered modal:
+- H3: "Tambah Paket" / "Edit Paket"
+- Input: Nama Paket
+- Textarea: Deskripsi singkat
+- Textarea: Isi Bundle 
+  Placeholder: "Satu item per baris: Name Tag, Pin Cluster, Sandal Jepit..."
+  Helper: "Ini yang ditampilkan ke pembeli sebagai daftar isi paket"
+- Input: Harga Estimasi (Rp)
+- Input: Nominal DP (Rp)
+- Input: Harga Final (Rp) — Optional badge, 
+  helper: "Kosongkan dulu, isi setelah panitia umumkan harga resmi"
+- Toggle: Status Aktif / Nonaktif
+- Buttons: "Simpan" (indigo) + "Batal" (outlined)
+
+── MODAL: KONFIRMASI RILIS TAGIHAN ──
+Centered modal (warning style):
+- Alert icon (amber large)
+- H3: "Rilis Tagihan Pelunasan?"
+- Text: "Kamu akan mengirimkan tagihan pelunasan ke X pemesan paket [Nama].
+  Pastikan harga final sudah benar sebelum melanjutkan."
+- Price summary: DP Dibayar: Rp XX | Harga Final: Rp XX | 
+  Sisa Tagihan: Rp XX
+- Buttons: "Ya, Rilis Sekarang" (red/danger) + "Batal"
+```
+
+---
+
+### ADM-03 — DAFTAR PESANAN `/admin/pesanan`
+
+```
+Build the orders management page for OSPEKIN.UB admin.
+Theme: light dashboard, data table focused.
+
+── SIDEBAR + TOP BAR (shared) ──
+Active: "Daftar Pesanan"
+Top bar: title + "Ekspor" dropdown button (xlsx/csv)
+
+── FILTER BAR ──
+White card, rounded-xl, border, padding:
+- Search input: "Cari nama atau email..." (with search icon left)
+- Dropdown: Status Bayar (Semua / Belum Bayar / DP Lunas / Lunas)
+- Dropdown: Status Logistik (Semua / Pending / Ditugaskan / 
+  Sedang Di Jalan / Selesai)
+- Dropdown: Paket (list paket aktif)
+- Dropdown: Fakultas
+
+── FLAGGING TABS ──
+Tab bar below filter:
+- "Semua" (default, count badge)
+- "Belum Isi Alamat" (red count badge)
+- "Belum Upload Foto" (orange count badge)
+
+── ORDERS TABLE ──
+White card, rounded-2xl, border:
+Table columns: 
+  Checkbox | Nama (+ email small below) | Paket | Status Bayar | 
+  Status Logistik | Kurir | Aksi
+
+Row styling:
+- "Belum Isi Alamat" rows: left red border accent
+- "Belum Upload Foto" rows: left orange border accent
+- Status bayar badges: 
+  "Belum Bayar" gray | "DP Lunas" indigo | "Lunas" green
+- Status logistik badges: 
+  "Pending" gray | "Ditugaskan" blue | "Sedang Di Jalan" amber | 
+  "Selesai" green
+
+KURIR COLUMN (for Lunas rows only):
+- Dropdown select kurir name (compact)
+- "Tugaskan" button (small, indigo) → changes status to Ditugaskan
+
+AKSI COLUMN:
+- Eye icon: view detail (modal or new page)
+
+── PAGINATION ──
+Bottom: prev/next + page info "1-20 dari 500 pesanan"
+```
+
+---
+
+### ADM-04 — MANAJEMEN USER `/admin/user`
+
+```
+Build the user management page for OSPEKIN.UB admin.
+Theme: light dashboard.
+
+── SIDEBAR + TOP BAR (shared) ──
+Active: "Manajemen User"
+Top bar: title + "Tambah User" button (indigo)
+
+── FILTER TAB ──
+Pill tabs: "Semua" | "Pemesan" | "Kurir" (with count badges)
+
+── USER TABLE ──
+White card, rounded-2xl, border:
+Columns: Avatar+Nama | Email | Role | WhatsApp | Tgl Daftar | Aksi
+
+Row:
+- Avatar: initials circle (indigo for Pemesan, amber for Kurir)
+- Role badge: "Pemesan" (indigo pill) / "Kurir" (amber pill)
+- Aksi: edit icon, reset-password icon (Kurir only), 
+  deactivate icon (red)
+
+── MODAL: TAMBAH / EDIT USER ──
+Centered modal:
+- H3: "Tambah User Baru" / "Edit User"
+- Input: Nama Lengkap
+- Input: Email
+- Input: Nomor WhatsApp
+- Input: Password (with show/hide, only on tambah)
+- Select: Role — "Pemesan" | "Kurir"
+- Helper note: "Akun akan langsung aktif tanpa verifikasi email"
+- Buttons: "Simpan" + "Batal"
+
+── MODAL: KONFIRMASI RESET PASSWORD ──
+- Warning icon
+- "Reset password akun [Nama Kurir]?"
+- Sub: "Password baru akan dikirimkan ke email kurir."
+- Buttons: "Ya, Reset" (amber) + "Batal"
+```
+
+---
+
+### ADM-05 — KODE REFERAL `/admin/referal`
+
+```
+Build the referral code management page for OSPEKIN.UB admin.
+Theme: light dashboard.
+
+── SIDEBAR + TOP BAR (shared) ──
+Active: "Kode Referal"
+Top bar: title + "Tambah Kode" button (indigo)
+
+── STATS ROW ──
+3 metric cards: Total Kode Aktif | Total Pemakaian | Total Diskon Diberikan
+
+── REFERRAL TABLE ──
+White card, rounded-2xl, border:
+Columns: Kode | Pemilik | Diskon | Kuota | Dipakai | Status | Aksi
+
+Row:
+- Kode: monospace font, copyable (copy icon right)
+- Diskon: "Rp X.XXX" (green text)
+- Dipakai / Kuota: "15 / 100" with small progress bar
+- Status: "Aktif" green toggle / "Nonaktif" gray toggle
+- Aksi: edit icon, toggle aktif/nonaktif
+
+── MODAL: TAMBAH / EDIT KODE ──
+Centered modal:
+- Input: Kode Referal (monospace style input, uppercase auto)
+- Input: Nama Pemilik Kode
+- Input: Nominal Diskon DP (Rp)
+- Input: Kuota (number)
+  Helper: "Batas informasi saja — kode harus dinonaktifkan manual"
+- Buttons: "Simpan" + "Batal"
+```
+
+---
+
+### ADM-06 — PENGATURAN SISTEM `/admin/pengaturan`
+
+```
+Build the system settings page for OSPEKIN.UB admin.
+Theme: light dashboard.
+
+── SIDEBAR + TOP BAR (shared) ──
+Active: "Pengaturan"
+Top bar: "Pengaturan Sistem"
+
+── SECTION: DEADLINE KUNCI DATA ──
+White card, rounded-2xl, border, padding:
+- H3: "Deadline Kunci Data Pesanan"
+- Info card (blue bg): 
+  "Setelah deadline ini, seluruh data pesanan akan terkunci permanen 
+  dan tidak bisa diedit oleh pemesan."
+- Current deadline display: 
+  Large date+time shown prominently (or "Belum diatur" if empty)
+- Form:
+  Date picker input: "Tanggal deadline"
+  Time picker input: "Waktu deadline"
+- Impact preview card (gray bg):
+  "X pesanan sudah akan terkunci"
+  "Y pesanan belum terkunci" 
+  Calculated from current deadline vs data
+- Button: "Simpan Deadline" (indigo)
+- Danger zone: "Hapus Deadline" (outlined red) with confirmation
+
+── SECTION: STATUS INTEGRASI ──
+White card, rounded-2xl, border:
+- H3: "Status Integrasi"
+- Row: Dokupay API — green dot "Terhubung" / red "Tidak Terhubung"
+- Row: Google Maps API — status same
+- Row: SMTP Email — status same
+- Each row: service name + icon + status badge + last checked time
+```
+
+---
+
+## ═══════════════════════════
+## KURIR PAGES
+## ═══════════════════════════
+
+---
+
+### K-01 — DASHBOARD KURIR `/kurir/dashboard`
+
+```
+Build the courier dashboard for OSPEKIN.UB.
+Theme: light, mobile-first (primary use on smartphone).
+
+── NAVBAR KURIR ──
+White bg, border bottom:
+- Left: "OSPEKIN" logo small
+- Center: "Tugas Pengantaran" title
+- Right: Logout icon button
+
+── SUMMARY BAR ──
+3 small stat pills horizontal row:
+"X Ditugaskan" (blue) | "Y Di Jalan" (amber) | "Z Selesai" (green)
+
+── FILTER TABS ──
+Pill tabs scrollable horizontal:
+"Semua" | "Ditugaskan" | "Sedang Di Jalan" | "Selesai"
+
+── ASSIGNMENT LIST ──
+Vertical stack of delivery cards (no table — card list for mobile):
+
+Each delivery card (white, rounded-2xl, border, shadow-sm):
+TOP ROW: 
+  - Recipient name (bold)
+  - Status badge (Ditugaskan/Di Jalan/Selesai) right-aligned
+  
+INFO ROWS (icon + text):
+  - map-pin icon: address text (truncated 2 lines)
+  - package icon: package name
+  - phone icon: WA number (tappable on mobile)
+
+BUTTON ROW (bottom of card):
+  - "Buka Peta" button (outlined, map icon) — Google Maps Intent link
+  - "Detail" button (indigo, chevron-right) → /kurir/pesanan/:id
+
+── EMPTY STATE ──
+Centered illustration, "Tidak ada tugas hari ini", sub text
+
+── BOTTOM PADDING ──
+Extra bottom padding for mobile thumb comfort
+```
+
+---
+
+### K-02 — DETAIL PESANAN KURIR `/kurir/pesanan/:id`
+
+```
+Build the courier order detail page for OSPEKIN.UB.
+Theme: light, mobile-first, action-focused.
+
+── NAVBAR KURIR ──
+With back arrow left (← Kembali)
+
+── HEADER CARD ──
+White card, rounded-2xl, border:
+- Recipient name (large, bold)
+- Status badge (current status)
+- Package name + "16 item bundle" sub
+
+── INFO CARD: PENERIMA ──
+White card:
+- Row: user icon + "Nama" — value
+- Row: phone icon + "WhatsApp" — value (blue, tappable link)
+- Row: map-pin icon + "Alamat" — full address text
+- Big button: "Buka di Google Maps" — full width, 
+  outlined with map icon, maps deep-link
+
+── INFO CARD: ISI PAKET ──
+White card, collapsible:
+- Header: "Isi Paket (16 item)" + chevron toggle
+- When expanded: 2-column grid of item names with check icons
+
+── ACTION CARD ──
+White card, border-top accent:
+
+STATE — DITUGASKAN:
+- Info text: "Kamu belum memulai pengantaran ini"
+- Button: "Mulai Pengantaran" — full width, indigo gradient, 
+  truck icon left
+  (Confirmation modal: "Mulai pengantaran ke [Nama]?")
+  After confirm → status changes to Sedang Di Jalan
+
+STATE — SEDANG DI JALAN:
+- Amber info banner: "Sedang dalam perjalanan..."
+- Button: "Paket Telah Diterima" — full width, green gradient, 
+  check icon left
+  → opens upload modal
+
+STATE — SELESAI:
+- Green success banner: "Pengantaran selesai"
+- POD photo displayed (rounded-xl, full width)
+- Delivery timestamp
+
+── MODAL: UPLOAD PROOF OF DELIVERY ──
+Bottom sheet modal (mobile style) or centered modal:
+- H3: "Upload Bukti Penerimaan"
+- Sub: "Foto penerima dengan paket, atau paket di depan pintu"
+- Upload area: large camera icon + "Ambil Foto / Pilih dari Galeri"
+- Preview: thumbnail after select
+- File info: filename + size
+- Error if > 3MB: "File terlalu besar, maksimal 3MB"
+- Buttons: "Kirim Bukti" (green, full width) + "Batal"
+  After upload success → status becomes Selesai, 
+  photo stored as POD
+```
+
+---
+
+## ═══════════════════════════
+## SHARED / REUSABLE COMPONENTS
+## ═══════════════════════════
+
+```
+Build these as reusable components usable across all pages:
+
+1. NAVBAR GUEST
+   Transparent → blur-glass on scroll, logo left, slide-tab nav center,
+   Masuk+Daftar buttons right, hamburger on mobile
+
+2. NAVBAR USER  
+   White bg, logo left, avatar dropdown right, bell notification icon
+
+3. SIDEBAR ADMIN
+   Dark (#111827) fixed sidebar 240px, logo top, icon+label nav menu,
+   active state indigo, user info + logout bottom
+
+4. NAVBAR KURIR
+   White, logo + title center, logout right
+
+5. STATUS BADGE COMPONENT
+   Input: status string
+   Output: colored pill badge
+   Status Bayar: Belum Bayar(gray), DP Lunas(indigo), Lunas(green)
+   Status Logistik: Pending(gray), Ditugaskan(blue), 
+     Sedang Di Jalan(amber), Selesai(green)
+
+6. EMPTY STATE COMPONENT
+   Props: icon, title, subtitle, optional CTA button
+   Centered layout, muted illustration style
+
+7. CONFIRMATION MODAL
+   Props: title, description, confirm text, cancel text, variant (danger/warning/info)
+   shadcn Dialog based
+```
