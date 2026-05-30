@@ -431,10 +431,14 @@ export function Landing() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-1 mb-2">
-                <span className="text-white font-bold text-lg">OSPEKIN</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                <span className="text-white/30 font-bold text-lg">.UB</span>
+              <div
+                onClick={() => navigate("/")}
+                className="inline-flex px-4 py-2 bg-white/5 border border-white/10 rounded-full
+                           items-center cursor-pointer hover:bg-white/10 transition-colors mb-3"
+              >
+                <span className="text-white font-bold text-sm tracking-tight">
+                  OSPEKIN.UB
+                </span>
               </div>
               <p className="text-white/40 text-sm">
                 Platform pemesanan atribut ospek resmi Universitas Brawijaya.
@@ -445,12 +449,18 @@ export function Landing() {
                 Quick Links
               </p>
               <div className="space-y-2">
-                {["Katalog", "Cara Pesan", "About", "Login"].map((link) => (
+                {[
+                  { label: "Katalog", href: "/katalog" },
+                  { label: "Cara Pesan", href: "/about#cara-pesan" },
+                  { label: "About", href: "/about" },
+                  { label: "Login", href: "/auth/login" },
+                ].map(({ label, href }) => (
                   <button
-                    key={link}
+                    key={label}
+                    onClick={() => navigate(href)}
                     className="block text-white/40 text-sm hover:text-white transition-colors"
                   >
-                    {link}
+                    {label}
                   </button>
                 ))}
               </div>

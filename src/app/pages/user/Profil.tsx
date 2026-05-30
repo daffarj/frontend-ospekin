@@ -17,29 +17,52 @@ export function UserProfil() {
     { id: "keamanan" as Tab, label: "Keamanan", icon: Shield },
   ];
 
+  const inputCls =
+    "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/25 focus:outline-none focus:border-indigo-500/60 focus:bg-white/8 transition-colors text-sm";
+  const labelCls = "text-white/60 text-sm font-medium mb-1.5 block";
+
   return (
-    <div className="min-h-screen bg-gray-50" style={{ fontFamily: "Inter, sans-serif" }}>
+    <div
+      className="min-h-screen text-white"
+      style={{ background: "#030303", fontFamily: "Inter, sans-serif" }}
+    >
       <NavbarUser name={name} />
 
       <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="grid md:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="md:col-span-1">
-            <div className="bg-white border border-gray-200 rounded-2xl p-5">
+            <div className="bg-white/5 border border-white/8 rounded-2xl p-5">
               <div className="text-center mb-5">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-2"
-                  style={{ background: "linear-gradient(135deg, #6366f1, #f43f5e)" }}>
-                  {name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-3"
+                  style={{
+                    background: "linear-gradient(135deg, #6366f1, #f43f5e)",
+                  }}
+                >
+                  {name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2)}
                 </div>
-                <p className="text-gray-900 font-semibold text-sm">{name}</p>
-                <p className="text-gray-500 text-xs">budi@gmail.com</p>
+                <p className="text-white font-semibold text-sm">{name}</p>
+                <p className="text-white/30 text-xs mt-0.5">budi@gmail.com</p>
               </div>
 
               <nav className="space-y-1">
                 {tabs.map(({ id, label, icon: Icon }) => (
-                  <button key={id} onClick={() => setTab(id)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-all ${tab === id ? "bg-indigo-50 text-indigo-700 font-medium" : "text-gray-600 hover:bg-gray-50"}`}>
-                    <Icon className="w-4 h-4" /> {label}
+                  <button
+                    key={id}
+                    onClick={() => setTab(id)}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-all ${
+                      tab === id
+                        ? "bg-indigo-500/15 border border-indigo-500/25 text-indigo-400 font-medium"
+                        : "text-white/50 hover:bg-white/5 hover:text-white"
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 shrink-0" /> {label}
                   </button>
                 ))}
               </nav>
@@ -48,97 +71,157 @@ export function UserProfil() {
 
           {/* Content */}
           <div className="md:col-span-3">
+            {/* Tab: Data Diri */}
             {tab === "diri" && (
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h2 className="text-gray-900 font-bold text-lg mb-6">Data Diri</h2>
+              <div className="bg-white/5 border border-white/8 rounded-2xl p-6">
+                <h2 className="text-white font-bold text-lg mb-6">Data Diri</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-gray-700 text-sm font-medium mb-1.5 block">Nama Lengkap</label>
-                    <input value={name} onChange={e => setName(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 text-gray-900" />
+                    <label className={labelCls}>Nama Lengkap</label>
+                    <input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className={inputCls}
+                    />
                   </div>
                   <div>
-                    <label className="text-gray-700 text-sm font-medium mb-1.5 block">Nomor WhatsApp</label>
+                    <label className={labelCls}>Nomor WhatsApp</label>
                     <div className="flex">
-                      <span className="px-3 py-3 bg-gray-100 border border-gray-200 border-r-0 rounded-l-xl text-gray-500 text-sm">+62</span>
-                      <input value={phone} onChange={e => setPhone(e.target.value)}
-                        className="flex-1 px-4 py-3 border border-gray-200 rounded-r-xl focus:outline-none focus:border-indigo-500 text-gray-900" />
+                      <span className="px-3 py-3 bg-white/5 border border-white/10 border-r-0 rounded-l-xl text-white/40 text-sm">
+                        +62
+                      </span>
+                      <input
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-r-xl text-white placeholder-white/25 focus:outline-none focus:border-indigo-500/60 transition-colors text-sm"
+                      />
                     </div>
                   </div>
                   <div>
-                    <label className="text-gray-700 text-sm font-medium mb-1.5 block">Email</label>
+                    <label className={labelCls}>Email</label>
                     <div className="relative">
-                      <input value="budi@gmail.com" disabled
-                        className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl text-gray-400 bg-gray-50 cursor-not-allowed" />
-                      <Lock className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" />
+                      <input
+                        value="budi@gmail.com"
+                        disabled
+                        className="w-full px-4 py-3 pr-10 bg-white/3 border border-white/8 rounded-xl text-white/25 cursor-not-allowed text-sm"
+                      />
+                      <Lock className="w-4 h-4 text-white/20 absolute right-3 top-1/2 -translate-y-1/2" />
                     </div>
-                    <p className="text-gray-400 text-xs mt-1">Email tidak bisa diubah</p>
+                    <p className="text-white/25 text-xs mt-1">
+                      Email tidak bisa diubah
+                    </p>
                   </div>
-                  <button className="px-6 py-2.5 rounded-full text-white text-sm font-medium bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                  <button className="px-6 py-2.5 rounded-full text-white text-sm font-medium bg-indigo-600 hover:bg-indigo-500 transition-colors">
                     Simpan Data Diri
                   </button>
                 </div>
               </div>
             )}
 
+            {/* Tab: Alamat */}
             {tab === "alamat" && (
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h2 className="text-gray-900 font-bold text-lg mb-4">Alamat Pengiriman</h2>
+              <div className="bg-white/5 border border-white/8 rounded-2xl p-6">
+                <h2 className="text-white font-bold text-lg mb-4">
+                  Alamat Pengiriman
+                </h2>
 
-                <div className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-100 rounded-xl mb-5">
-                  <Info className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                  <p className="text-blue-800 text-sm">Alamat ini yang akan digunakan sebagai tujuan pengiriman paketmu.</p>
+                <div className="flex items-start gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl mb-5">
+                  <Info className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <p className="text-blue-300 text-sm">
+                    Alamat ini yang akan digunakan sebagai tujuan pengiriman
+                    paketmu.
+                  </p>
                 </div>
 
-                <div className={`aspect-video rounded-xl border-2 border-dashed flex items-center justify-center mb-4 transition-colors ${skipAddress ? "border-gray-200 bg-gray-50" : "border-gray-300 bg-gray-100 hover:border-indigo-400 cursor-pointer"}`}>
+                {/* Maps placeholder */}
+                <div
+                  className={`aspect-video rounded-xl border-2 border-dashed flex items-center justify-center mb-4 transition-all ${
+                    skipAddress
+                      ? "border-white/5 bg-white/3"
+                      : "border-white/10 bg-white/3 hover:border-indigo-500/40 hover:bg-indigo-500/5 cursor-pointer"
+                  }`}
+                >
                   <div className="text-center">
-                    <MapPin className={`w-8 h-8 mx-auto mb-2 ${skipAddress ? "text-gray-300" : "text-gray-400"}`} />
-                    <p className={`text-sm ${skipAddress ? "text-gray-300" : "text-gray-500"}`}>Google Maps Picker — klik untuk pin lokasi</p>
+                    <MapPin
+                      className={`w-8 h-8 mx-auto mb-2 ${skipAddress ? "text-white/15" : "text-white/25"}`}
+                    />
+                    <p
+                      className={`text-sm ${skipAddress ? "text-white/15" : "text-white/30"}`}
+                    >
+                      Google Maps Picker — klik untuk pin lokasi
+                    </p>
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <label className="text-gray-700 text-sm font-medium mb-1.5 block">Alamat Lengkap</label>
+                  <label className={labelCls}>Alamat Lengkap</label>
                   <textarea
                     value={address}
-                    onChange={e => setAddress(e.target.value)}
+                    onChange={(e) => setAddress(e.target.value)}
                     disabled={skipAddress}
                     placeholder="Contoh: Jl. Veteran No. 1, Kos Mawar, Kamar 12, Malang"
                     rows={3}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 resize-none disabled:bg-gray-50 disabled:text-gray-400"
+                    className={`${inputCls} resize-none disabled:opacity-30 disabled:cursor-not-allowed`}
                   />
                 </div>
 
                 <label className="flex items-start gap-2.5 mb-4 cursor-pointer">
-                  <input type="checkbox" checked={skipAddress} onChange={e => setSkipAddress(e.target.checked)}
-                    className="mt-0.5 accent-indigo-600" />
-                  <span className="text-gray-700 text-sm">Isi alamat menyusul (saya belum tahu alamat kos)</span>
+                  <div
+                    onClick={() => setSkipAddress((s) => !s)}
+                    className={`w-4 h-4 mt-0.5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                      skipAddress
+                        ? "bg-indigo-600 border-indigo-500"
+                        : "border-white/20 bg-white/5"
+                    }`}
+                  >
+                    {skipAddress && (
+                      <span className="text-white text-[10px] font-bold leading-none">
+                        ✓
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-white/60 text-sm select-none">
+                    Isi alamat menyusul (saya belum tahu alamat kos)
+                  </span>
                 </label>
 
                 {skipAddress && (
-                  <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-xl mb-4">
-                    <span className="text-amber-600 text-sm">⚠</span>
-                    <p className="text-amber-800 text-sm">Kamu wajib mengisi alamat maksimal H-1 sebelum pengantaran</p>
+                  <div className="flex items-start gap-2 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-4">
+                    <span className="text-amber-400 text-sm shrink-0">⚠</span>
+                    <p className="text-amber-300 text-sm">
+                      Kamu wajib mengisi alamat maksimal H-1 sebelum pengantaran
+                    </p>
                   </div>
                 )}
 
-                <button className="px-6 py-2.5 rounded-full text-white text-sm font-medium bg-indigo-600 hover:bg-indigo-700">
+                <button className="px-6 py-2.5 rounded-full text-white text-sm font-medium bg-indigo-600 hover:bg-indigo-500 transition-colors">
                   Simpan Alamat
                 </button>
               </div>
             )}
 
+            {/* Tab: Keamanan */}
             {tab === "keamanan" && (
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h2 className="text-gray-900 font-bold text-lg mb-6">Ganti Password</h2>
+              <div className="bg-white/5 border border-white/8 rounded-2xl p-6">
+                <h2 className="text-white font-bold text-lg mb-6">
+                  Ganti Password
+                </h2>
                 <div className="space-y-4 max-w-sm">
-                  {["Password lama", "Password baru", "Konfirmasi password baru"].map((label) => (
+                  {[
+                    "Password lama",
+                    "Password baru",
+                    "Konfirmasi password baru",
+                  ].map((label) => (
                     <div key={label}>
-                      <label className="text-gray-700 text-sm font-medium mb-1.5 block">{label}</label>
-                      <input type="password" className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500" />
+                      <label className={labelCls}>{label}</label>
+                      <input
+                        type="password"
+                        className={inputCls}
+                        placeholder="••••••••"
+                      />
                     </div>
                   ))}
-                  <button className="px-6 py-2.5 rounded-full text-white text-sm font-medium bg-indigo-600 hover:bg-indigo-700">
+                  <button className="px-6 py-2.5 rounded-full text-white text-sm font-medium bg-indigo-600 hover:bg-indigo-500 transition-colors">
                     Ubah Password
                   </button>
                 </div>

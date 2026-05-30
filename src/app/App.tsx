@@ -10,6 +10,7 @@ import { UserDashboard } from "./pages/user/Dashboard";
 import { UserProfil } from "./pages/user/Profil";
 import { UserPesan } from "./pages/user/Pesan";
 import { UserCheckout } from "./pages/user/Checkout";
+import { UserPembayaranBerhasil } from "./pages/user/PembayaranBerhasil";
 import { UserStatusPesanan } from "./pages/user/StatusPesanan";
 import { UserEditPesanan } from "./pages/user/EditPesanan";
 import { AdminDashboard } from "./pages/admin/Dashboard";
@@ -40,6 +41,10 @@ export default function App() {
         <Route path="/user/profil" element={<UserProfil />} />
         <Route path="/user/pesan" element={<UserPesan />} />
         <Route path="/user/checkout" element={<UserCheckout />} />
+        <Route
+          path="/user/pembayaran-berhasil"
+          element={<UserPembayaranBerhasil />}
+        />
         <Route path="/user/pesanan/status" element={<UserStatusPesanan />} />
         <Route path="/user/pesanan/edit" element={<UserEditPesanan />} />
 
